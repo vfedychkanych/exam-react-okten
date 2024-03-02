@@ -10,7 +10,7 @@ interface IProps{
 }
 
 const Movie:FC<IProps> = ({movie}) => {
-    const {id, original_title, overview, popularity ,poster_path,vote_average,release_date,genre_ids} = movie;
+    const {id, original_title,poster_path} = movie;
 
     const navigate = useNavigate();
 

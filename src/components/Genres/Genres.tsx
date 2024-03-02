@@ -10,7 +10,7 @@ const Genres:FC<IProps> = ({genre}) => {
     const {genres} = genre;
     return (
         <div>
-            {genres.map((genre) => <NavLink key={genre.id} to={`${genre.id}`}>{genre.name}</NavLink>)}
+            {genres.map((genre) => <NavLink to={`${genre.id}`} key={genre.id}>{genre.name}</NavLink>)}
         </div>
     );
 };

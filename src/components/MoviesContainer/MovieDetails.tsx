@@ -1,5 +1,6 @@
 import {FC} from "react";
 import {IGenre, IMovie} from "../../interfaces";
+import {NavLink} from "react-router-dom";
 
 
 interface IProps{
@@ -8,9 +9,7 @@ interface IProps{
 }
 
 const MovieDetails:FC<IProps> = ({movieDetails,genres}) => {
-    const {id, original_title, overview, popularity ,poster_path,vote_average,release_date,genre_ids} = movieDetails;
-
-    console.log(genres)
+    const { original_title, overview,poster_path,vote_average,release_date,genre_ids} = movieDetails;
     return (
         <div>
             <h2>{original_title}</h2>
@@ -19,7 +18,11 @@ const MovieDetails:FC<IProps> = ({movieDetails,genres}) => {
                 <div>
                     <p>Popularity STARS: {vote_average}</p>
                     <p>Release Date: {release_date}</p>
-                    <div>Genres:  </div>
+                    <div>Genres:  <div>{
+                        genres.genres.filter(g => genre_ids.includes(g.id))
+                            .map(g => <NavLink to={`/genres/${g.id}`} key={g.id}>{g.name}   </NavLink>)
+                    }</div>
+                    </div>
                 </div>
             </div>
             <h3>Overview</h3>
