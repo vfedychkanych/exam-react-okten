@@ -1,9 +1,8 @@
 import {createBrowserRouter, NavLink} from "react-router-dom";
 
-import {MainLayout} from "./layouts/MainLayout";
-import {MoviesList,SearchMovie} from "./pages";
-import {MovieListCard} from "./pages/MovieListCard";
-import {GenreList} from "./pages/GenreList";
+import {MainLayout} from "./layouts";
+import {MoviesList, MovieListCard, GenreList} from "./pages";
+import {SearchPage} from "./pages/SearchPage";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +20,7 @@ const router = createBrowserRouter([
                 path: 'genres', element: <GenreList/>
             },
             {
-                path: 'search', element: <SearchMovie/>
+                path: 'search', element: <SearchPage/>
             }
         ]
     }

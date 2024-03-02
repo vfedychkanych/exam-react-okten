@@ -16,7 +16,7 @@ const Movie:FC<IProps> = ({movie}) => {
 
     return (
         <div>
-            <img onClick={() => navigate(id.toString(), {state:{movie}})} src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt=""/>
+            <img onClick={() => navigate(`/movies/${id.toString()}`, {state:{movie}})} src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt=""/>
             <p>{original_title}</p>
         </div>
     );
