@@ -1,26 +1,34 @@
 import {FC, useEffect, useState} from "react";
-import {movieService} from "../../services";
+
+import {Movies} from "../MoviesContainer/Movies";
+import {SetURLSearchParams, useSearchParams} from "react-router-dom";
 import {IMovie} from "../../interfaces";
-import {Movie} from "../MoviesContainer/Movie";
+import {movieService} from "../../services";
 
 interface IProps{
-    id:number;
+    ids:number[];
+    totalpage:number;
+    page:number;
+    setQuery:SetURLSearchParams;
 }
 
-const Search: FC<IProps> = ({ id }) => {
-    const [searchedMovie, setSearchedMovie] = useState<IMovie | null>(null);
-
+const Search: FC<IProps> = ({ ids ,totalpage,page, setQuery}) => {
+    const [moviesForSearch, setMoviesForSearch] = useState<IMovie[]>([]);
     useEffect(() => {
-        movieService.getById(id).then(({ data }) => setSearchedMovie(data));
-    }, [id]);
+        Promise.all(ids.map((id) => movieService.getById(id)))
+            .then((responses) => {
+                const moviesData = responses.map(({ data }) => data);
+                setMoviesForSearch(moviesData);
+            })
+            .catch((error) => {
 
-    if (!searchedMovie) {
-        return <div>Loading...</div>;
-    }
+                console.error('Помилка отримання даних фільмів:', error);
+            });
+        }, [ids]);
 
     return (
         <div>
-            <Movie movie={searchedMovie} key={searchedMovie.id} />
+            <Movies movies={moviesForSearch} page={`${page}`} setQuery={setQuery} totalpage={totalpage}/>
         </div>
     );
 };

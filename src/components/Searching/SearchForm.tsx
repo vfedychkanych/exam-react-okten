@@ -1,27 +1,33 @@
-import React, {FC, useState} from "react";
+import React, {FC, useEffect} from "react";
 import {FieldValues, SubmitHandler, useForm} from "react-hook-form";
 
 import {searchService} from "../../services";
-import {useNavigate} from "react-router-dom";
-import {ISearch} from "../../interfaces";
 
+
+interface FormData {
+    movie: string;
+}
 interface IProps{
-    setSearchMovie:React.Dispatch<React.SetStateAction<{id:number, name:string}[]>>;
+    query: URLSearchParams;
+    setSearchMovie: (movies: any[]) => void;
+    setPage: (page: number) => void;
+    setTotalpage: (totalPage: number) => void;
 }
 
-const SearchForm:FC<IProps> = ({setSearchMovie}) => {
+const SearchForm:FC<IProps> = ({query, setSearchMovie,setPage,setTotalpage}) => {
     const {register, reset, handleSubmit, formState:{errors,isValid}, setValue} = useForm({
         mode:'all'
     });
 
-    const search: SubmitHandler<FieldValues> = async (formData) => {
-        try {
-            const { data } = await searchService.getRes(formData.movie);
+    const takeMovies = async (param:string) => {
+        await searchService.getRes(param, query.get('page')).then(({ data }) => {
             setSearchMovie(data.results);
-
-        } catch (error) {
-            console.error('Error during search:', error);
-        }
+            setPage(data.page);
+            setTotalpage(data.total_pages);
+        });
+    }
+    const search:SubmitHandler<Record<string, string>> = (data) => {
+        takeMovies(data.movie)
     };
 
     return (
