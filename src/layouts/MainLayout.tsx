@@ -1,13 +1,22 @@
 import {Outlet} from "react-router-dom";
-import {Header} from "../components/Header/Header";
+import {Header} from "../components";
+import css from "./MainLayout.module.css"
+import {createContext} from "react";
+import {useState} from "react";
+export type GlobalContent = [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 
+const Context = createContext<GlobalContent>(null)
 const MainLayout = () => {
+    const [switcher, setSwitcher] = useState(false)
     return (
-        <div>
-            <Header/>
-            <Outlet/>
+        <div className={switcher? css.darkBody : css.whiteBody}>
+            <Context.Provider value={[switcher, setSwitcher]}>
+                <Header />
+                <Outlet />
+            </Context.Provider>
         </div>
     );
 };
 
-export {MainLayout};
+export {MainLayout,
+Context};

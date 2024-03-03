@@ -19,6 +19,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    "typeRoots": [
+      "./src/types/react-rating-stars-component.d.ts", "./node_modules/@types"],
     "strictNullChecks": false
   },
   "include": [

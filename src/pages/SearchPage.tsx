@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import {IMovie} from "../interfaces";
 import {useSearchParams} from "react-router-dom";
+
+import {IMovie} from "../interfaces";
 import {searchService} from "../services";
-import {Movies} from "../components";
-import {SearchForm} from "../components/Searching/SearchForm";
+import {Movies, SearchForm} from "../components";
 
 const SearchPage = () => {
     const [searchParam, setSearchParam] = useState<string>(null);
